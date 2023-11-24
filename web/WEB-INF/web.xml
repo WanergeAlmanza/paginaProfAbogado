@@ -5,15 +5,19 @@
         <servlet-class>control.Controlador</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Validar</servlet-name>
-        <servlet-class>control.Validar</servlet-class>
+        <servlet-name>PersonaServlet</servlet-name>
+        <servlet-class>control.PersonaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReporteServlet</servlet-name>
+        <servlet-class>control.ReporteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Controlador</servlet-name>
-        <url-pattern>/Controlador</url-pattern>
+        <servlet-name>ReporteServlet</servlet-name>
+        <url-pattern>/ReporteServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Validar</servlet-name>
-        <url-pattern>/Validar</url-pattern>
+        <servlet-name>PersonaServlet</servlet-name>
+        <url-pattern>/PersonaServlet</url-pattern>
     </servlet-mapping>
 </web-app>

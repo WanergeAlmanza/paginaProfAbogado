@@ -11,7 +11,7 @@ package model;
  */
 
 import java.sql.Connection;
-import config.Conexion;
+import conexion.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -22,17 +22,20 @@ public class PersonaDAO {
     Connection conn = null;
     Conexion conexion = null;
 
-    public void agregar(Persona p) {
-
+    public int agregar(Persona p) {
+        int res = 0;
         try {
             conn = conexion.getConexion();
-            String query = "INSERT INTO persona (nombre, correo) values (?, ?)";
+            String query = "INSERT INTO info_persona (correo, nombre, teléfono) values (?, ?, ?)";
             ps = conn.prepareStatement(query);
-            ps.setString(1, p.getNombre()); ps.setString(2, p.getCorreo());
-            ps.executeUpdate();
+            ps.setString(1, p.getCorreo());
+            ps.setString(2, p.getNombre());
+            ps.setString(3, p.getTelefono());
+            res = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally { try { rs.close(); } catch (Exception e) { /* ignored */ }
         }
+        return res;
     }
 }

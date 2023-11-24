@@ -6,16 +6,19 @@ package control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import model.Persona;
+import model.PersonaDAO;
 
 /**
  *
  * @author waner
  */
-public class Validar extends HttpServlet {
+public class PersonaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,16 +34,20 @@ public class Validar extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Validar</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Validar at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+            String nombre = request.getParameter("nombre_registro");
+            String correo = request.getParameter("email_registro");
+            String telefono = request.getParameter("tel_registro");
+            String mensaje = "Error";
+            if (request.getParameter("registrar_correo") != null) {
+                Persona p = new Persona(correo, nombre, telefono);
+                PersonaDAO persondao = new PersonaDAO();
+                int res = persondao.agregar(p);
+                if (res != 0) {mensaje = "Su correo se registro correctamente.";}
+                else{mensaje = "Su correo ya se encuentra registrado.";}
+            }
+            request.setAttribute("message", mensaje);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }catch(Exception e){System.out.println("Error"+e.getLocalizedMessage());}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
